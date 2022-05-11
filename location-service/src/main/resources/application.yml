@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: location-service
+  data:
+    mongodb:
+      authentication-database: admin
+      username: test_user
+      password: test_password
+      database: location_mongodb
+      port: 27015
+      host: localhost
+
+server:
+  port: 9001
+
