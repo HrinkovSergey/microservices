@@ -1,0 +1,15 @@
+version: "3.3"
+
+services:
+
+  location-mongo:
+    image: mongo:3.6.19-xenial
+    container_name: location-mongodb
+    ports:
+      - "27015:27017"
+    restart: always
+    volumes:
+      - ../db/location_mongo_data:/data
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${ADMIN_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${ADMIN_PASSWORD}
