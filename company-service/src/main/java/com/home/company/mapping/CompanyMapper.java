@@ -15,5 +15,5 @@ public interface CompanyMapper {
     CompanyDto toDto(Company company);
 
     @Mapping(target = "id", ignore = true)
-    Company toEntity(CompanyForCreateDto departmentForCreateDto);
+    Company toEntity(CompanyForCreateDto companyForCreateDto);
 }

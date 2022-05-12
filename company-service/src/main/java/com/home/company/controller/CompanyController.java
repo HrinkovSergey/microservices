@@ -1,6 +1,5 @@
 package com.home.company.controller;
 
-import com.home.company.bpp.annotation.Log;
 import com.home.company.dto.CompanyDto;
 import com.home.company.dto.CompanyForCreateDto;
 import com.home.company.mapping.CompanyMapper;
@@ -23,8 +22,8 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public CompanyDto findDepartmentById(@PathVariable("id") Long departmentId) {
-        return companyService.findCompanyById(departmentId);
+    public CompanyDto findCompanyById(@PathVariable("id") Long companyId) {
+        return companyService.findCompanyById(companyId);
     }
 
 }

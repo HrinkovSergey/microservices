@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootConfiguration
-public class LocationServiceConfig {
+public class CompanyServiceConfig {
 
     @Bean
     public RestTemplate restTemplate() {
