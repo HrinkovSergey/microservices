@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
 
-  location-mongo:
+  location-mongo-db:
     image: mongo:3.6.19-xenial
     container_name: location-mongodb
     ports:
@@ -13,3 +13,19 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${ADMIN_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${ADMIN_PASSWORD}
+
+  company-postgres-db:
+    image: postgres:14.2-alpine
+    container_name: company-postgres
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - ../db/company_postgres_data:/var/lib/postgresql/data
+      - ../company-service/src/main/resources/db/migration/init:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_DB=test_database
+      - POSTGRES_USER=${ADMIN_USER}
+      - POSTGRES_PASSWORD=${ADMIN_PASSWORD}
+    cap_add:
+      - SYS_NICE
