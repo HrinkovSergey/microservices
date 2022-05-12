@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: user-service
+  data:
+    mongodb:
+      authentication-database: admin
+      username: test_user
+      password: test_password
+      database: user_mongodb
+      port: 27017
+      host: localhost
+
+  microservice:
+    company:
+      base-url: http://localhost:9002/companies/
+    location:
+      base-url: http://localhost:9001/locations/
+server:
+  port: 9003
+
