@@ -20,7 +20,7 @@
     <logger name="org.springframework.web" level="debug" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
-    <logger name="com.globant.location" level="debug" additivity="false">
+    <logger name="com.home.location" level="debug" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
     <root level="error">
