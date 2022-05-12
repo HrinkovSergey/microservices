@@ -1,26 +1,29 @@
 package com.home.location.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-@Getter
-@Setter
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@SuppressWarnings("com.haulmont.jpb.LombokDataInspection")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Document(collection = "location")
+@Entity
+@Table(name = "location")
 public class Location {
 
     @Id
-    private String id;
-    @Field(name = "country")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "country")
     private String locationCountry;
-    @Field(name = "city")
+    @Column(name = "city")
     private String locationCity;
 }

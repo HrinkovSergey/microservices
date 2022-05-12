@@ -13,5 +13,6 @@
     <modules>
         <module>location-service</module>
         <module>company-service</module>
+        <module>user-service</module>
     </modules>
 </project>

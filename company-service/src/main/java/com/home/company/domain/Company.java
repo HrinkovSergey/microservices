@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 
+@SuppressWarnings("com.haulmont.jpb.LombokDataInspection")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,5 +22,5 @@ public class Company {
     @Column(name = "name")
     private String companyName;
     @Column(name = "location_id")
-    private String locationId;
+    private Long locationId;
 }

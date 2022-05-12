@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -24,6 +25,6 @@ public class User {
     @Field(name = "company_id")
     private Long companyId;
     @Field(name = "location_id")
-    private String locationId;
+    private Long locationId;
 }
 

@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class LocationDto {
 
-    private String id;
+    private Long id;
     private String locationCountry;
     private String locationCity;
 }

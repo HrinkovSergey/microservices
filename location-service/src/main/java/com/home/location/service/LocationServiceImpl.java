@@ -26,7 +26,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public Location findLocationById(String locationId) {
+    public Location findLocationById(Long locationId) {
         Optional<Location> location = locationRepository.findById(locationId);
         if (location.isEmpty()) {
             log.warn("There is no such location");

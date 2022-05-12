@@ -3,20 +3,24 @@ version: "3.3"
 services:
 
   location-mongo-db:
-    image: mongo:3.6.19-xenial
-    container_name: location-mongodb
-    ports:
-      - "27015:27017"
-    restart: always
-    volumes:
-      - ../db/location_mongo_data:/data
+    image: mysql:8.0
+    container_name: location-mysql-db
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${ADMIN_USER}
-      - MONGO_INITDB_ROOT_PASSWORD=${ADMIN_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=RootPassword
+      - MYSQL_DATABASE=test_database
+      - MYSQL_USER=${ADMIN_USER}
+      - MYSQL_PASSWORD=${ADMIN_PASSWORD}
+    ports:
+      - 3306:3306
+    volumes:
+      - ../db/location_mysql_data:/var/lib/mysql
+      - ../location-service/src/main/resources/db/migration/init:/docker-entrypoint-initdb.d
+    cap_add:
+      - SYS_NICE
 
   company-postgres-db:
     image: postgres:14.2-alpine
-    container_name: company-postgres
+    container_name: company-postgres-db
     ports:
       - "5432:5432"
     restart: always

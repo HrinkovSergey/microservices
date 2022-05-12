@@ -1,14 +1,17 @@
 spring:
   application:
     name: location-service
-  data:
-    mongodb:
-      authentication-database: admin
-      username: test_user
-      password: test_password
-      database: location_mongodb
-      port: 27015
-      host: localhost
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/test_database?serverTimezone=UTC
+    username: test_user
+    password: test_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    jpa:
+      hibernate:
+      #      ddl-auto: create-drop
+      show-sql: true
 
 server:
   port: 9001

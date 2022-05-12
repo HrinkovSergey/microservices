@@ -5,5 +5,5 @@ import com.home.location.domain.Location;
 public interface LocationService {
     Location saveLocation(Location location);
 
-    Location findLocationById(String locationId);
+    Location findLocationById(Long locationId);
 }

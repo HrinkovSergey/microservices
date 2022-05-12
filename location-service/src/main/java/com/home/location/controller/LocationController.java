@@ -23,7 +23,7 @@ public class LocationController {
     }
 
     @GetMapping("/{id}")
-    public LocationDto findLocationById(@PathVariable("id") String locationId) {
+    public LocationDto findLocationById(@PathVariable("id") Long locationId) {
         Location returnLocation = locationService.findLocationById(locationId);
         return LocationMapper.INSTANCE.toDto(returnLocation);
     }
