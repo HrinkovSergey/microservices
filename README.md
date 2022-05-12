@@ -2,5 +2,6 @@
 ### Microservices tutorial project
 
 Scheme structure of microservices:
+![Schema](https://github.com/HrinkovSergey/microservices/blob/structures/clean-structure/Simple%20scheme.png?raw=true)
 
-![](Simple scheme.png)
+[//]: # (![Schema]&#40;Simple scheme.png&#41;)
