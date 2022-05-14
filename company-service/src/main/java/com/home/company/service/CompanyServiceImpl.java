@@ -1,12 +1,12 @@
 package com.home.company.service;
 
-import com.home.company.bpp.annotation.Log;
 import com.home.company.domain.Company;
 import com.home.company.dto.CompanyDto;
 import com.home.company.dto.LocationDto;
 import com.home.company.exception.CompanyException;
 import com.home.company.mapping.CompanyMapper;
 import com.home.company.repository.CompanyRepository;
+import com.home.logger.annotation.LogMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +17,6 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-@Log
 public class CompanyServiceImpl implements CompanyService {
     @Value("${spring.microservice.location.base-url}")
     private String locationUrl;
@@ -28,12 +27,14 @@ public class CompanyServiceImpl implements CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
 
+    @LogMethod
     @Override
     public CompanyDto saveCompany(Company company) {
         Company returnCompany = companyRepository.save(company);
         return getCompanyDto(returnCompany);
     }
 
+    @LogMethod
     @Override
     public CompanyDto findCompanyById(Long companyId) {
         Optional<Company> companyOptional = companyRepository.findById(companyId);
