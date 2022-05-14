@@ -1,9 +1,9 @@
 package com.home.location.service;
 
-import com.home.location.bpp.annotation.Log;
 import com.home.location.domain.Location;
 import com.home.location.exception.LocationException;
 import com.home.location.repository.LocationRepository;
+import com.home.logger.annotation.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

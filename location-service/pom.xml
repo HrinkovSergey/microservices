@@ -70,5 +70,13 @@
             <version>${org.mapstruct.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.home</groupId>
+            <artifactId>logger</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/logger-0.0.1-SNAPSHOT.jar</systemPath>
+        </dependency>
+
     </dependencies>
 </project>

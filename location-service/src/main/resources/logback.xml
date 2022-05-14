@@ -20,6 +20,9 @@
     <logger name="org.springframework.web" level="debug" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
+    <logger name="com.home.logger" level="debug" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
     <logger name="com.home.location" level="debug" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
