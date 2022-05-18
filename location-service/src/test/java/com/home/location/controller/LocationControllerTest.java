@@ -6,7 +6,6 @@ import com.home.location.dto.LocationDto;
 import com.home.location.repository.LocationRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -24,9 +23,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = classpath:application-integrationtest.yml"})
 class LocationControllerTest {
-    private static final String requestMapping = "/locations";
-    private static final String postMapping = "/";
-    private static final String getMapping = "/";
+    private static final String REQUEST_MAPPING = "/locations";
+    private static final String POST_MAPPING = "/";
+    private static final String GET_MAPPING = "/";
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
@@ -42,7 +41,7 @@ class LocationControllerTest {
         LocationDto locationDto = createLocationDto(locationId, country, city);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
-                        .post(requestMapping + postMapping)
+                        .post(REQUEST_MAPPING + POST_MAPPING)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(locationDto)))
                 .andDo(print());
@@ -64,7 +63,7 @@ class LocationControllerTest {
         locationId = repository.save(location).getId();
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
-                        .get(requestMapping + getMapping + locationId)
+                        .get(REQUEST_MAPPING + GET_MAPPING + locationId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print());
 
