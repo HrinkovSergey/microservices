@@ -12,5 +12,5 @@ public class UserForCreatingDto {
     private String lastName;
     private String email;
     private Long companyId;
-    private String locationId;
+    private Long locationId;
 }

@@ -1,0 +1,6 @@
+spring:
+  microservice:
+    company:
+      base-url: http://localhost:9002/companies/
+    location:
+      base-url: http://localhost:9001/locations/
