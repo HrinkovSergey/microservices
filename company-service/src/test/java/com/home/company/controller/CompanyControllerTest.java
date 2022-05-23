@@ -1,10 +1,11 @@
 package com.home.company.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.home.company.domain.Company;
 import com.home.company.dto.CompanyDto;
 import com.home.company.dto.CompanyForCreateDto;
 import com.home.company.dto.LocationDto;
+import com.home.company.helper.CompanyHelper;
+import com.home.company.helper.LocationHelper;
 import com.home.company.repository.CompanyRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,13 +43,17 @@ class CompanyControllerTest {
     private ObjectMapper objectMapper;
     @Value("${spring.microservice.location.base-url}")
     private String locationUrl;
+    @Autowired
+    private LocationHelper locationHelper;
+    @Autowired
+    private CompanyHelper companyHelper;
 
     @Test
     void saveCompany() throws Exception {
         String companyName = "testCompanyName";
         Long locationId = 2L;
-        CompanyForCreateDto companyForCreateDto = createCompanyForCreateDto(companyName, locationId);
-        LocationDto locationDto = createLocationDto(locationId, "country", "city");
+        CompanyForCreateDto companyForCreateDto = companyHelper.createCompanyForCreateDto(companyName, locationId);
+        LocationDto locationDto = locationHelper.createLocationDto(locationId, "country", "city");
         doReturn(locationDto).when(restTemplate).getForObject(locationUrl + locationId, LocationDto.class);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
@@ -73,10 +78,9 @@ class CompanyControllerTest {
         Long companyId = null;
         String companyName = "testName";
         Long locationId = 3L;
-        CompanyForCreateDto companyForCreateDto = createCompanyForCreateDto(companyName, locationId);
-        LocationDto locationDto = createLocationDto(locationId, "country", "city");
+        LocationDto locationDto = locationHelper.createLocationDto(locationId, "country", "city");
         doReturn(locationDto).when(restTemplate).getForObject(locationUrl + locationId, LocationDto.class);
-        companyId = companyRepository.save(createCompany(companyId, companyName, locationId)).getId();
+        companyId = companyRepository.save(companyHelper.createCompany(companyId, companyName, locationId)).getId();
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                         .get(REQUEST_MAPPING + GET_MAPPING + companyId)
@@ -92,28 +96,5 @@ class CompanyControllerTest {
         assertEquals(locationDto.getId(), resultLocationDto.getId());
         assertEquals(locationDto.getLocationCountry(), resultLocationDto.getLocationCountry());
         assertEquals(locationDto.getLocationCity(), resultLocationDto.getLocationCity());
-    }
-
-    private CompanyForCreateDto createCompanyForCreateDto(String companyName, Long locationId) {
-        CompanyForCreateDto companyForCreateDto = new CompanyForCreateDto();
-        companyForCreateDto.setCompanyName(companyName);
-        companyForCreateDto.setLocationId(locationId);
-        return companyForCreateDto;
-    }
-
-    private Company createCompany(Long companyId, String companyName, Long locationId) {
-        Company company = new Company();
-        company.setCompanyName(companyName);
-        company.setId(companyId);
-        company.setLocationId(locationId);
-        return company;
-    }
-
-    private LocationDto createLocationDto(Long id, String locationCountry, String locationCity) {
-        LocationDto locationDto = new LocationDto();
-        locationDto.setId(id);
-        locationDto.setLocationCountry(locationCountry);
-        locationDto.setLocationCity(locationCity);
-        return locationDto;
     }
 }

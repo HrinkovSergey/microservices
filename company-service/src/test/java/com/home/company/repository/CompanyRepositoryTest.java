@@ -1,10 +1,12 @@
 package com.home.company.repository;
 
 import com.home.company.domain.Company;
+import com.home.company.helper.CompanyHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.Optional;
@@ -13,10 +15,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @TestPropertySource(properties = {"spring.config.location = classpath:application-test.yml"})
+@Import(CompanyHelper.class)
 class CompanyRepositoryTest {
 
     @Autowired
     private CompanyRepository companyRepository;
+    @Autowired
+    private CompanyHelper companyHelper;
 
     @AfterEach
     void clearDatabase() {
@@ -28,7 +33,7 @@ class CompanyRepositoryTest {
         Long companyId = null;
         String companyName = "companyName";
         Long locationId = 1L;
-        Company companyToSave = createCompany(companyId, companyName, locationId);
+        Company companyToSave = companyHelper.createCompany(companyId, companyName, locationId);
 
         Company company = companyRepository.save(companyToSave);
 
@@ -42,7 +47,7 @@ class CompanyRepositoryTest {
         Long companyId = null;
         String companyName = "testName";
         Long locationId = 2L;
-        Company company = createCompany(companyId, companyName, locationId);
+        Company company = companyHelper.createCompany(companyId, companyName, locationId);
         Company savedCompany = companyRepository.save(company);
         companyId = savedCompany.getId();
 
@@ -53,13 +58,5 @@ class CompanyRepositoryTest {
         assertEquals(companyId, companyById.getId());
         assertEquals(companyName, companyById.getCompanyName());
         assertEquals(locationId, companyById.getLocationId());
-    }
-
-    private Company createCompany(Long companyId, String companyName, Long locationId) {
-        Company company = new Company();
-        company.setCompanyName(companyName);
-        company.setId(companyId);
-        company.setLocationId(locationId);
-        return company;
     }
 }
