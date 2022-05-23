@@ -9,5 +9,5 @@ import lombok.ToString;
 @ToString
 public class CompanyForCreateDto {
     private String companyName;
-    private String locationId;
+    private Long locationId;
 }
