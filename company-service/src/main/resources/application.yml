@@ -1,6 +1,6 @@
 spring:
   application:
-    name: company-service
+    name: COMPANY-SERVICE
 
   datasource:
     url: jdbc:postgresql://localhost:5432/test_database
@@ -9,7 +9,6 @@ spring:
 
   jpa:
     hibernate:
-#      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
@@ -18,8 +17,17 @@ spring:
 
   microservice:
     location:
-      base-url: http://localhost:9001/locations/
+      base-url: http://LOCATION-SERVICE/locations/
 
 server:
   port: 9002
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    instance:
+      hostname: localhost
 

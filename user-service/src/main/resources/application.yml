@@ -12,9 +12,18 @@ spring:
 
   microservice:
     company:
-      base-url: http://localhost:9002/companies/
+      base-url: http://COMPANY-SERVICE/companies/
     location:
-      base-url: http://localhost:9001/locations/
+      base-url: http://LOCATION-SERVICE/locations/
 server:
   port: 9003
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    instance:
+      hostname: localhost
 
