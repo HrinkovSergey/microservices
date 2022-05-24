@@ -1,0 +1,30 @@
+server:
+  port: 9191
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users/**
+        - id: COMPANY-SERVICE
+          uri: lb://COMPANY-SERVICE
+          predicates:
+            - Path=/companies/**
+        - id: LOCATION-SERVICE
+          uri: lb://LOCATION-SERVICE
+          predicates:
+            - Path=/locations/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    instance:
+      hostname: localhost
