@@ -2,7 +2,7 @@
 ### Microservices tutorial project
 
 Scheme structure of microservices:
-![Schema](https://github.com/HrinkovSergey/microservices/blob/structures/eureka_server/Simple%20scheme.png?raw=true)
+![Schema](https://github.com/HrinkovSergey/microservices/blob/structures/api_gateway/Simple%20scheme.png?raw=true)
 
 [//]: # (![Schema]&#40;Simple scheme.png&#41;)
 
