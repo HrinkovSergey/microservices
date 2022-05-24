@@ -11,14 +11,29 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: USER-SERVICE
+                fallbackuri: forward:/userServiceFallBack
         - id: COMPANY-SERVICE
           uri: lb://COMPANY-SERVICE
           predicates:
             - Path=/companies/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: COMPANY-SERVICE
+                fallbackuri: forward:/COMPANYServiceFallBack
         - id: LOCATION-SERVICE
           uri: lb://LOCATION-SERVICE
           predicates:
             - Path=/locations/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: LOCATION-SERVICE
+                fallbackuri: forward:/locationServiceFallBack
 
 eureka:
   client:
@@ -28,3 +43,16 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
     instance:
       hostname: localhost
+
+#  circuitbreaker
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        failureRateThreshold: 100
+        slidingWindowSize: 2
+        waitDurationInOpenState: 100s
+  ratelimiter:
+    configs:
+      default:
+        timeoutDuration: 4
