@@ -15,12 +15,14 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
 
-  microservice:
-    location:
-      base-url: http://LOCATION-SERVICE/locations/
-
 server:
   port: 9002
+
+microservice:
+  routes:
+    location:
+      className: LocationDto
+      baseUrl: http://LOCATION-SERVICE/locations/
 
 eureka:
   client:
