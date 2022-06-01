@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.home.company.dto.CompanyDto;
 import com.home.company.dto.CompanyForCreateDto;
 import com.home.company.dto.LocationDto;
+import com.home.company.dtogetter.DtoGetter;
 import com.home.company.helper.CompanyHelper;
 import com.home.company.helper.LocationHelper;
 import com.home.company.repository.CompanyRepository;
@@ -19,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -38,7 +38,7 @@ class CompanyControllerTest {
     @Autowired
     private CompanyRepository companyRepository;
     @MockBean
-    private RestTemplate restTemplate;
+    private DtoGetter<LocationDto, Long> locationDtoGetter;
     @Autowired
     private ObjectMapper objectMapper;
     @Value("${spring.microservice.location.base-url}")
@@ -54,7 +54,7 @@ class CompanyControllerTest {
         Long locationId = 2L;
         CompanyForCreateDto companyForCreateDto = companyHelper.createCompanyForCreateDto(companyName, locationId);
         LocationDto locationDto = locationHelper.createLocationDto(locationId, "country", "city");
-        doReturn(locationDto).when(restTemplate).getForObject(locationUrl + locationId, LocationDto.class);
+        doReturn(locationDto).when(locationDtoGetter).getDtoFromExternalResource(locationId);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                         .post(REQUEST_MAPPING + POST_MAPPING)
@@ -79,7 +79,7 @@ class CompanyControllerTest {
         String companyName = "testName";
         Long locationId = 3L;
         LocationDto locationDto = locationHelper.createLocationDto(locationId, "country", "city");
-        doReturn(locationDto).when(restTemplate).getForObject(locationUrl + locationId, LocationDto.class);
+        doReturn(locationDto).when(locationDtoGetter).getDtoFromExternalResource(locationId);
         companyId = companyRepository.save(companyHelper.createCompany(companyId, companyName, locationId)).getId();
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders

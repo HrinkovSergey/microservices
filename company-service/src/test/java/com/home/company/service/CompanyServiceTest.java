@@ -3,6 +3,7 @@ package com.home.company.service;
 import com.home.company.domain.Company;
 import com.home.company.dto.CompanyDto;
 import com.home.company.dto.LocationDto;
+import com.home.company.dtogetter.DtoGetter;
 import com.home.company.exception.CompanyException;
 import com.home.company.helper.CompanyHelper;
 import com.home.company.helper.LocationHelper;
@@ -14,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
@@ -35,7 +35,7 @@ class CompanyServiceTest {
     @Autowired
     private CompanyHelper companyHelper;
     @MockBean
-    private RestTemplate restTemplate;
+    private DtoGetter<LocationDto, Long> locationDtoGetter;
     @Value("${spring.microservice.location.base-url}")
     private String locationUrl;
 
@@ -48,7 +48,7 @@ class CompanyServiceTest {
         Company savedCompany = companyHelper.createCompany(companyId, companyName, locationId);
         LocationDto locationDto = locationHelper.createLocationDto(locationId, "country", "city");
         doReturn(savedCompany).when(companyRepository).save(companyToSave);
-        doReturn(locationDto).when(restTemplate).getForObject(locationUrl + locationId, LocationDto.class);
+        doReturn(locationDto).when(locationDtoGetter).getDtoFromExternalResource(locationId);
 
         CompanyDto companyDto = companyService.saveCompany(companyToSave);
 
@@ -68,7 +68,7 @@ class CompanyServiceTest {
         Optional<Company> company = Optional.ofNullable(companyHelper.createCompany(companyId, companyName, locationId));
         LocationDto locationDto = locationHelper.createLocationDto(locationId, "country", "city");
         doReturn(company).when(companyRepository).findById(companyId);
-        doReturn(locationDto).when(restTemplate).getForObject(locationUrl + locationId, LocationDto.class);
+        doReturn(locationDto).when(locationDtoGetter).getDtoFromExternalResource(locationId);
 
         CompanyDto companyDto = companyService.findCompanyById(companyId);
 
