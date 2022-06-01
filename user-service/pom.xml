@@ -78,6 +78,12 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/resources/logger-0.0.1-SNAPSHOT.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 </project>
