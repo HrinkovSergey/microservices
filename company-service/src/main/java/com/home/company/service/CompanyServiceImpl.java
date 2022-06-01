@@ -3,26 +3,23 @@ package com.home.company.service;
 import com.home.company.domain.Company;
 import com.home.company.dto.CompanyDto;
 import com.home.company.dto.LocationDto;
+import com.home.company.dtogetter.DtoGetter;
 import com.home.company.exception.CompanyException;
 import com.home.company.mapping.CompanyMapper;
 import com.home.company.repository.CompanyRepository;
 import com.home.logger.annotation.LogMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
 @Service
 @Slf4j
 public class CompanyServiceImpl implements CompanyService {
-    @Value("${spring.microservice.location.base-url}")
-    private String locationUrl;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private DtoGetter<LocationDto, Long> locationDtoGetter;
 
     @Autowired
     private CompanyRepository companyRepository;
@@ -45,8 +42,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     private CompanyDto getCompanyDto(Company company) {
-        LocationDto locationDto = restTemplate.getForObject(
-                locationUrl + company.getLocationId(), LocationDto.class);
+        LocationDto locationDto = locationDtoGetter.getDtoFromExternalResource(company.getLocationId());
         CompanyDto companyDto = CompanyMapper.INSTANCE.toDto(company);
         companyDto.setLocation(locationDto);
         return companyDto;
