@@ -14,17 +14,18 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static final String LOG_MESSAGE = "[{}:{}]";
+    private static final String SERVICE_NAME = "location";
 
     @ExceptionHandler(LocationException.class)
     protected ResponseEntity<ClientMessageDto> handleLocationException(final LocationException exception) {
         log.error(LOG_MESSAGE, exception.getClass().getSimpleName(), exception.getMessage());
-        return new ResponseEntity<>(new ClientMessageDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ClientMessageDto(exception.getMessage(), SERVICE_NAME), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ClientMessageDto> handleException(final Exception exception) {
         log.error(LOG_MESSAGE, exception.getClass().getSimpleName(), exception.getMessage());
-        return new ResponseEntity<>(new ClientMessageDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ClientMessageDto(exception.getMessage(), SERVICE_NAME), HttpStatus.BAD_REQUEST);
     }
 
     @SuppressWarnings("NullableProblems")
@@ -35,7 +36,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                              final HttpStatus status,
                                                              final WebRequest request) {
         log.error(LOG_MESSAGE, exception.getClass().getSimpleName(), exception.getMessage());
-        return new ResponseEntity<>(new ClientMessageDto("The request error"), status);
+        return new ResponseEntity<>(new ClientMessageDto("The request error", SERVICE_NAME), status);
     }
 
 }

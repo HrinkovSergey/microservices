@@ -11,4 +11,5 @@ import lombok.ToString;
 @ToString
 public class ClientMessageDto {
     private String message;
+    private String service;
 }
