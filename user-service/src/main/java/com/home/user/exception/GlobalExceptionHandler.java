@@ -1,6 +1,8 @@
 package com.home.user.exception;
 
 import com.home.user.dto.ClientMessageDto;
+import com.home.user.dtogetter.exception.CompanyServiceException;
+import com.home.user.dtogetter.exception.LocationServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,9 +15,24 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+    private static final String ERROR_FORMAT = "[{}:{}]";
+
     @ExceptionHandler(UserException.class)
     protected ResponseEntity<ClientMessageDto> handleLocationException(final UserException exception) {
-        log.error("[{}:{}]", exception.getClass().getSimpleName(), exception.getMessage());
+        log.error(ERROR_FORMAT, exception.getClass().getSimpleName(), exception.getMessage());
+        return new ResponseEntity<>(new ClientMessageDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(LocationServiceException.class)
+    protected ResponseEntity<ClientMessageDto> handleLocationServiceException(
+            final LocationServiceException exception) {
+        log.error(ERROR_FORMAT, exception.getClass().getSimpleName(), exception.getMessage());
+        return new ResponseEntity<>(new ClientMessageDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CompanyServiceException.class)
+    protected ResponseEntity<ClientMessageDto> handleCompanyServiceException(final CompanyServiceException exception) {
+        log.error(ERROR_FORMAT, exception.getClass().getSimpleName(), exception.getMessage());
         return new ResponseEntity<>(new ClientMessageDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
@@ -26,7 +43,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             final HttpHeaders headers,
             final HttpStatus status,
             final WebRequest request) {
-        log.error("[{}:{}]", exception.getClass().getSimpleName(), exception.getMessage());
+        log.error(ERROR_FORMAT, exception.getClass().getSimpleName(), exception.getMessage());
         return new ResponseEntity<>(new ClientMessageDto("The request error"), status);
     }
 

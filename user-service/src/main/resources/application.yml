@@ -10,11 +10,40 @@ spring:
       port: 27017
       host: localhost
 
-  microservice:
-    company:
-      base-url: http://localhost:9002/companies/
-    location:
-      base-url: http://localhost:9001/locations/
 server:
   port: 9003
 
+microservice:
+  routes:
+    location:
+      className: LocationDto
+      baseUrl: http://localhost:9001/locations/
+    company:
+      className: CompanyDto
+      baseUrl: http://localhost:9002/companies/
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      userService:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
