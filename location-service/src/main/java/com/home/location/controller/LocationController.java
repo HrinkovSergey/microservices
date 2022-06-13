@@ -29,9 +29,6 @@ public class LocationController {
 
     @GetMapping("/{id}")
     public LocationDto findLocationById(@PathVariable("id") Long locationId) {
-        if (locationId == 2L) {
-            locationId = 3L;
-        }
         Location returnLocation = locationService.findLocationById(locationId);
         return LocationMapper.INSTANCE.toDto(returnLocation);
     }
