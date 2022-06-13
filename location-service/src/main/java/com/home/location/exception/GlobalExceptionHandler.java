@@ -25,7 +25,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ClientMessageDto> handleException(final Exception exception) {
         log.error(LOG_MESSAGE, exception.getClass().getSimpleName(), exception.getMessage());
-        return new ResponseEntity<>(new ClientMessageDto(exception.getMessage(), SERVICE_NAME), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ClientMessageDto("The request error", SERVICE_NAME), HttpStatus.BAD_REQUEST);
     }
 
     @SuppressWarnings("NullableProblems")
