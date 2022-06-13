@@ -2,6 +2,7 @@ package com.home.company.controller;
 
 import com.home.company.dto.CompanyDto;
 import com.home.company.dto.CompanyForCreateDto;
+import com.home.company.dtogetter.exception.LocationServiceException;
 import com.home.company.mapping.CompanyMapper;
 import com.home.company.service.CompanyService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -35,6 +36,9 @@ public class CompanyController {
     }
 
     public CompanyDto locationServiceFallback(Exception exception) {
+        if (exception.getClass() == LocationServiceException.class) {
+            throw new LocationServiceException(exception.getMessage());
+        }
         throw new NoFallbackAvailableException(exception.getMessage(), exception);
     }
 }
